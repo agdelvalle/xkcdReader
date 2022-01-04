@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- css -->
+    <link rel="stylesheet" href="index.css">
+<!-- font awesome   -->
+    <script src="https://kit.fontawesome.com/6cc2875a6b.js" crossorigin="anonymous"></script>
+<!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,500;1,100&display=swap" rel="stylesheet">
+    <title>XKCD Reader</title>
+</head>
+<body>
+    <header>
+        <h1>xkcd [reader]</h1>
+        <i><h2>- a webcomic of romance, sarcasm, math, and language</h2></i>
+    </header>
+    <main>
+        <div class="controls">
+            <button id="prev-btn"><i class="fas fa-angle-double-left"></i>
+            </button>
+            <button id="random-btn">Random Comic</button>
+            <button id="next-btn"><i class="fas fa-angle-double-right"></i>
+            </button>
+        </div>
+        <div class="content">
+            <div class="imgDetails">
+                <div id="titlecont"></div>
+                <div class="date"></div>
+            </div>
+            <div class="comic">
+                To get started, please visit <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">https://cors-anywhere.herokuapp.com/corsdemo</a>, click on the "Request temporary access to the demo server" button, and reload this page.
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Curious about the comic? Visit the original site <a href="https://xkcd.com/" target="_blank">here.</a></p>
+        <p>And see more of my work <a href="https://github.com/agdelvalle" target="_blank">here.</a></p>
+    </footer>
+<script src="scripts.js"></script>
+</body>
+</html>
