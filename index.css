@@ -59,10 +59,17 @@ main{
 
 .controls {
     display: flex;
+    flex-direction: column;
     /* background-color: green; */
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     padding: 0 3%;
     width: 50%;
+}
+
+.controls div{
+    display: flex;
+    justify-content: space-between;
 }
 
 button {
@@ -83,6 +90,10 @@ button {
     color: darkslategray;
     font-size: larger;
     font-weight: bold;
+}
+
+.hidden {
+    display: none;
 }
 
 #prev-btn, #next-btn{

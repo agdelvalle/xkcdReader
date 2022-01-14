@@ -21,19 +21,60 @@
     </header>
     <main>
         <div class="controls">
-            <button id="prev-btn"><i class="fas fa-angle-double-left"></i>
-            </button>
-            <button id="random-btn">Random Comic</button>
-            <button id="next-btn"><i class="fas fa-angle-double-right"></i>
-            </button>
+            <div>
+                <button id="prev-btn"><i class="fas fa-angle-double-left"></i>
+                </button>
+                <button id="random-btn">Random Comic</button>
+                <button id="next-btn"><i class="fas fa-angle-double-right"></i>
+                </button>
+            </div>
+            <div>
+                <p>Show latest comics:</p>
+                <br>
+                <select name="numOfComics" id="numOfComics">
+                    <option value="1">1</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
         </div>
         <div class="content">
-            <div class="imgDetails">
-                <div id="titlecont"></div>
-                <div class="date"></div>
+            <div class="one">
+                <div class="imgDetails">
+                    <div id="titlecont"></div>
+                    <div class="date"></div>
+                </div>
+                <div class="comicO">
+                    To get started, please visit <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">https://cors-anywhere.herokuapp.com/corsdemo</a>, click on the "Request temporary access to the demo server" button, and reload this page.
+                </div>
             </div>
-            <div class="comic">
-                To get started, please visit <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">https://cors-anywhere.herokuapp.com/corsdemo</a>, click on the "Request temporary access to the demo server" button, and reload this page.
+            <div class="two">
+                <div class="imgDetails">
+                    <div class="titlecont"></div>
+                    <div class="date"></div>
+                </div>
+                <div class="comicA"></div>
+            </div>
+            <div class="three hidden">
+                <div class="imgDetails">
+                    <div class="titlecont"></div>
+                    <div class="date"></div>
+                </div>
+                <div class="comic"></div>
+            </div>
+            <div class="four hidden">
+                <div class="imgDetails">
+                    <div class="titlecont"></div>
+                    <div class="date"></div>
+                </div>
+                <div class="comic"></div>
+            </div>
+            <div class="five hidden">
+                <div class="imgDetails">
+                    <div class="titlecont"></div>
+                    <div class="date"></div>
+                </div>
+                <div class="comic"></div>
             </div>
         </div>
     </main>
