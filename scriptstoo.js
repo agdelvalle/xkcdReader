@@ -72,15 +72,18 @@
             // sets to latest comic number
             latestNum = displayNum;
             // console.log("stripnums is " + stripNumbers)
+            
+            // SET NUMBERS FOR RANDOM COMIC BUTTON
+            randomPageNum = Math.floor((Math.random() * stripNumbers.length) + 1);
         })};
 
     getLatest();
 
-    const proxiedRequest = (url) => {
+    const fetchAll = (url) => {
         // hide comic div to show loading spinner
         comicOrig.classList.add('hidden')
         loadingWheel.classList.remove('hidden')
-        // fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`)
+
         fetch(url)
         .then(response => {
             if (response.ok) return response.json()
@@ -92,7 +95,7 @@
             getLatest();
             // set to latest comic number, based on response of fetch 
             latestNum = res.num;
-            // console.log("latestNum is " + latestNum)
+            console.log("latestNum is " + latestNum)
             // remove hidden class and set innerHTML of middle div to show latest comic
             const image = `<img src="${res.img}" alt="${res.alt}"></img>`;
             comicOrig.classList.remove('hidden')
@@ -115,8 +118,8 @@
                 console.log(stripNumbers)
             } else if(latestNum == 2){
             // if comic #2 is currently in the middie, set latest comic, and comics 1, 2, 3, and 4
-                nextThree = stripNumbers[stripNumbers.length-1];
-                nextTwo = stripNumbers[0];
+                nextThree = stripNumbers[stripNumbers.length-4];
+                nextTwo = stripNumbers[stripNumbers.length-3];
                 nextFour = stripNumbers[latestNum];
                 nextFive = stripNumbers[latestNum+1];
                 console.log(stripNumbers)
@@ -142,28 +145,17 @@
             comicThreeUrl = `https://xkcd.vercel.app/?comic=${nextThree}`;
             comicFourUrl = `https://xkcd.vercel.app/?comic=${nextFour}`;
             comicFiveUrl = `https://xkcd.vercel.app/?comic=${nextFive}`;
-            
-            // SET NUMBERS FOR RANDOM COMIC BUTTON
-            randomPageNum = Math.floor((Math.random() * stripNumbers.length) + 1);
-        }
-            )
-    }
-
-    // GET LATEST COMIC
-    proxiedRequest('https://xkcd.vercel.app/?comic=latest')
-
-
-    // MAKE REQUEST TO FETCH & SHOW 5 COMICS
-    function displayFive(){
-        console.log("show 5")
-                       // FETCH SECOND COMIC
-                       fetch(comicTwoUrl).then(response => {
+        })
+        
+        // FETCH SECOND COMIC
+                    fetch(comicTwoUrl).then(response => {
                         if (response.ok) return response.json()
                         throw new Error('Network response was not ok.')
                     })
                     .then((resTwo => {
                         console.log("second comic: " + resTwo.num)
                         const image = `<img src="${resTwo.img}" alt="${resTwo.alt}"></img>`;
+                        // loadingWheel.classList.add('hidden')
                         comicA.innerHTML = image;
                     }))
         
@@ -204,72 +196,79 @@
                     }))
     }
 
+    fetchAll('https://xkcd.vercel.app/?comic=latest')
+    showOne()
+
+    function showOne(){
+        four.classList.add('hidden');
+        two.classList.add('hidden');
+        three.classList.add('hidden');
+        five.classList.add('hidden');
+    }
+
     // MAKE REQUEST TO FETCH & SHOW 3 COMICS
-    function displayThree(){
-        console.log("show 3")
-        // FETCH SECOND COMIC
-        fetch(comicTwoUrl).then(response => {
-         if (response.ok) return response.json()
-         throw new Error('Network response was not ok.')
-        })
-        .then((resTwo => {
-            console.log("second comic: " + resTwo.num)
-            const image = `<img src="${resTwo.img}" alt="${resTwo.alt}"></img>`;
-            comicA.innerHTML = image;
-        }))
+    function showThree(){
+      four.classList.remove('hidden');
+      two.classList.remove('hidden');
+      three.classList.add('hidden');
+      five.classList.add('hidden');
 
-        // FETCH FOURTH COMIC
-        fetch(comicFourUrl).then(response => {
-            if (response.ok) return response.json()
-            throw new Error('Network response was not ok.')
-        })
-        .then((resFour => {
-            console.log("fouth comic: " + resFour.num)
+    }
 
-            const image = `<img src="${resFour.img}" alt="${resFour.alt}"></img>`;
-            comicC.innerHTML = image;
-        }))
-}
+    function showFive(){
+        four.classList.remove('hidden');
+        two.classList.remove('hidden');
+        three.classList.remove('hidden');
+        five.classList.remove('hidden');
+    }
 
     function randomComic(){
-        proxiedRequest(`https://xkcd.vercel.app/?comic=${randomPageNum}`)
-        if(displayStrips.value == 3){
-            displayThree();
-        } else if(displayStrips.value == 5){
-            displayFive();
+        fetchAll(`https://xkcd.vercel.app/?comic=${randomPageNum}`)
+        if(displayStrips.value == 1){
+            showOne()
+        } else if(displayStrips.value == 3) {
+            showThree()
+        } else {
+            showFive()
         }
     }
 
     function searchComic(){
         let searchComicNum = searchInput.value
         if(searchComicNum <= latestNum){
-            proxiedRequest(`https://xkcd.vercel.app/?comic=${searchComicNum}`)
-            if(displayStrips.value == 3){
-                displayThree();
-            } else if(displayStrips.value == 5){
-                displayFive();
+            fetchAll(`https://xkcd.vercel.app/?comic=${searchComicNum}`)
+            if(displayStrips.value == 1){
+                showOne()
+            } else if(displayStrips.value == 3) {
+                showThree()
+            } else {
+                showFive()
             }
-        }else{
+        } else {
             console.log("No comic found")
         }
     }
 
     // SET PREVIOUS AND NEXT BUTTONS
     nextButton.addEventListener('click', () => {
-        proxiedRequest(`https://xkcd.vercel.app/?comic=${nextFour}`);
-        if(displayStrips.value == 3){
-            displayThree();
-        } else if(displayStrips.value == 5){
-            displayFive();
+        fetchAll(`https://xkcd.vercel.app/?comic=${nextFour}`)
+        if(displayStrips.value == 1){
+            showOne()
+        } else if(displayStrips.value == 3) {
+            showThree()
+        } else {
+            showFive()
         }
     })
         
     prevButton.addEventListener('click', () => {
-        proxiedRequest(`https://xkcd.vercel.app/?comic=${nextTwo}`);
-        if(displayStrips.value == 3){
-            displayThree();
-        } else if(displayStrips.value == 5){
-            displayFive();
+        fetchAll(`https://xkcd.vercel.app/?comic=${nextTwo}`)
+        if(displayStrips.value == 1){
+            showOne()
+        } else if(displayStrips.value == 3) {
+            showThree()
+        } else {
+            showFive()
         }
     })
 
@@ -279,11 +278,13 @@
 // DROP DOWN FUNCTIONALITY
     displayStrips.addEventListener('change', () => {
         if(displayStrips.value == 3){
-            displayThree();
-            two.classList.remove("hidden");
+            fetchThree();
+            three.classList.remove("hidden");
+            two.classList.add("hidden");
             four.classList.remove("hidden");
+            five.classList.add("hidden");
         } else if(displayStrips.value == 5){
-            displayFive();
+            fetchFive();
             two.classList.remove("hidden");
             three.classList.remove("hidden");
             four.classList.remove("hidden");

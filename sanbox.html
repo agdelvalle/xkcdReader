@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>text here</h1>
+    <button id="previous">Prev</button>
+    <button id="next">Next</button>
+
+    <script>
+        const here = document.querySelector('h1')
+        const next = document.querySelector('#next')
+        const prev = document.querySelector('#previous')
+
+        let arr = [1,2,3,4,5]
+        let number = 0
+
+        here.innerHTML = arr[number];
+
+        next.addEventListener('click', () => {
+            console.log(number)
+            if(number+1 == (arr.length)){
+                number = 0;
+                here.innerHTML = arr[number];
+            }
+            else {
+                number +=1;
+                here.innerHTML = arr[number];
+            }
+
+        })
+
+        prev.addEventListener('click', () => {
+            console.log(number)
+            if(number == 0){
+                number = arr.length-1;
+                here.innerHTML = arr[number];
+                console.log(number)
+            }
+            else if(number > 0) {
+                number -=1;
+                here.innerHTML = arr[number];
+            }
+        })
+
+    </script>
+</body>
+</html>
