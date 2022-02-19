@@ -83,6 +83,10 @@ main{
     margin-top: 5%;
 }
 
+.search-container{
+    display: flex;
+}
+
 button {
     border: none;
 }
@@ -91,6 +95,9 @@ button {
     background-color: transparent;
     font-size: 34px;
     padding: 3%;
+    font-family: 'Exo 2', sans-serif;
+    color: white;
+    filter:drop-shadow(2px 2px 2px lightslategray);
 }
 
 #random-btn{
@@ -101,7 +108,7 @@ button {
     color: white;
     font-size: 18px;
     /* border: 1px lightsteelblue solid; */
-    padding: 0 2%;
+    padding: 0 3%;
     filter:drop-shadow(2px 2px 2px lightslategray);
 }
 
@@ -127,11 +134,19 @@ button {
     color: white;
 }
 
+select{
+    margin: 0 1%;
+    padding: 0 1%;
+}
+
+
 /* SEARCH ERROR MESSAGE */
 #searchError{
     color: darkred;
     font-family: 'Exo 2', sans-serif;
     font-weight: bolder;
+    text-align: center;
+    margin-top: 10px;
 }
 /* LOADING SPINNER */
 
@@ -213,6 +228,11 @@ footer{
     .controls{
         justify-content: space-between;
         width: 100%;
+    }
+
+    .search-container{
+        display: flex;
+        flex-direction: column;
     }
 
     .imgDetails{
