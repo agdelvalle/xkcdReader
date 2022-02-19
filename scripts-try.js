@@ -75,9 +75,9 @@
             for (var i = 1; i <= displayNum; i++) {
                 stripNumbers.push(i);
             }
-            
             // sets to latest comic number
-            latestNum = displayNum;
+            latestNum = res.num;
+            
 
         })};
     
@@ -90,7 +90,6 @@
     function clearAll(){
         document.querySelector('#searchError').classList.add('hidden')
         loadingWheel.classList.remove('hidden');
-        console.log("clear")
         one.classList.add('hidden');
         four.classList.add('hidden');
         two.classList.add('hidden');
@@ -118,48 +117,35 @@
                 nextTwo = stripNumbers[latestNum - 2];
                 nextFour = stripNumbers[0];
                 nextFive = stripNumbers[1];
-                console.log(stripNumbers)
             // if comic #1 is currently in the middie, set two latest comics and comics 2 and 3
             } else if(latestNum == stripNumbers.length-1){
                 nextThree = stripNumbers[stripNumbers.length-4];
                 nextTwo = stripNumbers[stripNumbers.length-3];
                 nextFour = stripNumbers[latestNum];
                 nextFive = stripNumbers[0];
-                console.log(stripNumbers)
             } else if(latestNum == stripNumbers.length-2){
                 nextThree = stripNumbers[stripNumbers.length-5];
                 nextTwo = stripNumbers[stripNumbers.length-4];
                 nextFour = stripNumbers[stripNumbers.length-2];
                 nextFive = stripNumbers[latestNum+1];
-                console.log(stripNumbers)
             } else if(latestNum == 1){
                 nextThree = stripNumbers[stripNumbers.length-2];
                 nextTwo = stripNumbers[stripNumbers.length-1];
                 nextFour = stripNumbers[latestNum];
                 nextFive = stripNumbers[latestNum+1];
-                console.log(stripNumbers)
             } else if(latestNum == 2){
             // if comic #2 is currently in the middie, set latest comic, and comics 1, 2, 3, and 4
                 nextThree = stripNumbers[stripNumbers.length-1];
                 nextTwo = stripNumbers[0];
                 nextFour = stripNumbers[latestNum];
                 nextFive = stripNumbers[latestNum+1];
-                console.log(stripNumbers)
             } else {
             // in every other case, set 2 preceding comics and 2 next comics
             nextThree = stripNumbers[latestNum - 3];
             nextTwo = stripNumbers[latestNum - 2];
             nextFour = stripNumbers[latestNum];
             nextFive = stripNumbers[latestNum+1];
-            console.log(stripNumbers)
         }
-        
-        // CHECK
-        console.log("3 comic:" + nextThree)
-        console.log("2 comic:" + nextTwo)
-        console.log("current comic:" + latestNum)
-        console.log("4 comic:" + nextFour)
-        console.log("5 comic:" + nextFive)
         
         // Set new URLs based on conditions above
         comicTwoUrl = `https://xkcd.vercel.app/?comic=${nextTwo}`;
@@ -176,66 +162,28 @@
         loadingWheel.classList.add('hidden')
         one.classList.remove('hidden')
         comicOrig.innerHTML = image;
-        
-        // FETCH SECOND COMIC
-        fetch(comicTwoUrl).then(response => {
-        if (response.ok) return response.json()
-        throw new Error('Network response was not ok.')
-        })
-        .then((resTwo => {
-            console.log("second comic: " + resTwo.num)
-            const details = `
-            <div class="date">#${resTwo.num}</div>
-            <div class="titlecont">${resTwo.safe_title}</div>`
-            imgDetailsB.innerHTML = details;
-            const image = `<img src="${resTwo.img}" alt="${resTwo.alt}"></img>`;
-            comicB.innerHTML = image;
-        }))
-            
-        // FETCH THIRD COMIC
-        fetch(comicThreeUrl).then(response => {
-            if (response.ok) return response.json()
-            throw new Error('Network response was not ok.')
-        })
-        .then((resThree => {
-            console.log("third comic: " + resThree.num)
-            const details = `
-            <div class="date">#${resThree.num}</div>
-            <div class="titlecont">${resThree.safe_title}</div>`
-            imgDetailsA.innerHTML = details;
-            const image = `<img src="${resThree.img}" alt="${resThree.alt}"></img>`;
-            comicA.innerHTML = image;
-        }))
-            
-        // FETCH FOURTH COMIC
-        fetch(comicFourUrl).then(response => {
-            if (response.ok) return response.json()
-            throw new Error('Network response was not ok.')
-        })
-        .then((resFour => {
-            console.log("fouth comic: " + resFour.num)
-            const details = `
-            <div class="date">#${resFour.num}</div>
-            <div class="titlecont">${resFour.safe_title}</div>`
-            imgDetailsC.innerHTML = details;
-            const image = `<img src="${resFour.img}" alt="${resFour.alt}"></img>`;
-            comicC.innerHTML = image;
-        }))
-        
-        // FETCH FIFTH COMIC
-        fetch(comicFiveUrl).then(response => {
-            if (response.ok) return response.json()
-            throw new Error('Network response was not ok.')
-        })
-        .then((resFive => {
-            console.log("fifth comic: " + resFive.num)
-            const details = `
-            <div class="date">#${resFive.num}</div>
-            <div class="titlecont">${resFive.safe_title}</div>`
-            imgDetailsD.innerHTML = details;
-            const image = `<img src="${resFive.img}" alt="${resFive.alt}"></img>`;
-            comicD.innerHTML = image;
-        }))
+
+        let comicUrlArray = [comicTwoUrl, comicThreeUrl, comicFourUrl, comicFiveUrl]
+        let comicImgDivArray = [imgDetailsB, imgDetailsA, imgDetailsC, imgDetailsD]
+        let comicDivArray = [comicB, comicA, comicC, comicD]
+
+        for (let comicUrl of comicUrlArray){
+            fetch(comicUrl).then(response => {
+                if (response.ok) return response.json()
+                throw new Error('Network response was not ok.')
+                })
+                .then((res => {
+                    let workingIndex= comicUrlArray.indexOf(comicUrl);
+
+                    const details = `
+                    <div class="date">#${res.num}</div>
+                    <div class="titlecont">${res.safe_title}</div>`
+                    
+                    comicImgDivArray[workingIndex].innerHTML = details;
+                    const image = `<img src="${res.img}" alt="${res.alt}"></img>`;
+                    comicDivArray[workingIndex].innerHTML = image;
+                }))
+        }
     }
         )
 }
