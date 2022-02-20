@@ -143,10 +143,7 @@
         comicThreeUrl = `https://xkcd.vercel.app/?comic=${nextThree}`;
         comicFourUrl = `https://xkcd.vercel.app/?comic=${nextFour}`;
         comicFiveUrl = `https://xkcd.vercel.app/?comic=${nextFive}`;
-        
-        // remove hidden class and set innerHTML of middle div to show latest comic
-        loadingWheel.classList.add('hidden')
-        one.classList.remove('hidden')
+
 
         let comicUrlArray = [url, comicTwoUrl, comicThreeUrl, comicFourUrl, comicFiveUrl]
         let comicImgDivArray = [imgDetailsO, imgDetailsB, imgDetailsA, imgDetailsC, imgDetailsD]
@@ -169,6 +166,10 @@
                     comicDivArray[workingIndex].innerHTML = image;
                 }))
         }
+
+        // remove hidden class and set innerHTML of middle div to show latest comic
+        loadingWheel.classList.add('hidden')
+        one.classList.remove('hidden')
     }
         )
 }
@@ -225,9 +226,9 @@ searchButton.addEventListener('click', () => {
     document.querySelector('#searchError').classList.add('hidden')
     let searchComicNum = searchInput.value
     if(searchComicNum <= latestNum){
-        getComics(`https://xkcd.vercel.app/?comic=${searchComicNum}`).then(
+        getComics(`https://xkcd.vercel.app/?comic=${parseInt(searchComicNum)}`).then(
             changeDisplay(displayStrips.value))
-    } else {
+    } else if(searchComicNum > latestNum || searchComicNum < 1) {
         // alert("Comic does not exist, please try a lower value")
         loadingWheel.classList.add('hidden');
         document.querySelector('#searchError').classList.remove('hidden')
