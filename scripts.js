@@ -91,7 +91,7 @@
     function getComics(url) {
         // hide comic divs and show loading spinner
         clearAll()
-        loadingWheel.classList.remove('hidden')
+        // loadingWheel.classList.remove('hidden')
  
         // FETCH CURRENT OR SEARCHED-FOR COMIC
         return fetch(url)
@@ -175,6 +175,7 @@
 }
 
 function changeDisplay(num){
+    clearAll()
 
     const comicDivs = [one, four, two, three, five];
     
@@ -214,7 +215,7 @@ prevButton.addEventListener('click', () => {
 
 // show random comic(s)
 randomButton.addEventListener('click', () => {
-    clearAll();
+    // clearAll();
     randomNum();
     getComics(`https://xkcd.vercel.app/?comic=${randomPageNum}`).then(
         changeDisplay(displayStrips.value)
@@ -225,10 +226,10 @@ searchButton.addEventListener('click', () => {
     loadingWheel.classList.remove('hidden');
     document.querySelector('#searchError').classList.add('hidden')
     let searchComicNum = searchInput.value
-    if(searchComicNum <= latestNum){
+    if(searchComicNum <= latestNum && searchComicNum > 0 && searchComicNum % 1 == 0){
         getComics(`https://xkcd.vercel.app/?comic=${parseInt(searchComicNum)}`).then(
             changeDisplay(displayStrips.value))
-    } else if(searchComicNum > latestNum || searchComicNum < 1) {
+    } else {
         // alert("Comic does not exist, please try a lower value")
         loadingWheel.classList.add('hidden');
         document.querySelector('#searchError').classList.remove('hidden')
